@@ -1,0 +1,28 @@
+name: Build Pygame Android APK
+
+on:
+  push:
+    branches: [ "main" ] # main 브랜치에 코드가 push될 때마다 자동 빌드
+  workflow_dispatch:     # 수동으로 빌드 버튼을 누르고 싶을 때도 지원
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Get Buildozer Action
+        uses: ArtemGovorov/buildozer-action@v1
+        with:
+          command: buildozer android debug
+          repository_txt: true
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pygame-android-apk
+          path: bin/*.apk
+          retention-days: 7 # 완성된 파일은 7일 동안 다운로드 가능
+
