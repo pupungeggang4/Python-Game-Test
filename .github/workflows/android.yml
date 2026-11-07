@@ -13,11 +13,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Get Buildozer Action
-        uses: ArtemGovorov/buildozer-action@v1
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
         with:
-          command: buildozer android debug
-          repository_txt: true
+          workdir: .
+          buildozer_version: stable
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
